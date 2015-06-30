@@ -35,5 +35,13 @@ namespace VentingMachine.Test
             _coinMgr.Insert(Coins.Quarter);
             Assert.AreEqual("$0.25", _coinMgr.CurrentAmount);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void RejectInvalidCoins()
+        {
+            _coinMgr.Insert(Coins.Penny);
+            Assert.AreEqual("$0.00", _coinMgr.CurrentAmount);
+        }
     }
 }

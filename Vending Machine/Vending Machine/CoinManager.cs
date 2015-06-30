@@ -28,6 +28,8 @@ namespace VendingMachine
         {
             if (ACCEPTED_COINS.Contains(coin))
                 _currentAmount = coin.ToDecimal();
+            else
+                throw new ArgumentException("Invalid coin inserted");
         }
     }
 }
