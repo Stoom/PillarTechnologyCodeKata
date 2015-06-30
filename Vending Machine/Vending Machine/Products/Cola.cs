@@ -2,13 +2,12 @@
 
 namespace VendingMachine.Products
 {
-    public class Cola : IProduct
+    public class Cola : ProductBase
     {
-        public string Price 
-        {
-            get { return _price.ToString("C", CultureInfo.CurrentCulture); }
-        }
+        private const decimal PRICE = (decimal) 1.00;
 
-        private decimal _price = (decimal) 1.00;
+        public Cola() : base(PRICE)
+        {
+        }
     }
 }

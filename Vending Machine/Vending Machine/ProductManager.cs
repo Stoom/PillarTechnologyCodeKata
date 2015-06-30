@@ -10,7 +10,8 @@ namespace VendingMachine
         private readonly Dictionary<string, IProduct> _avliableProducts = new Dictionary<string, IProduct>
         {
             {"COLA", new Cola()},
-            {"CHIPS", new Chips()}
+            {"CHIPS", new Chips()},
+            {"CANDY", new Candy()}
         };
 
         public ProductManager(CoinManager coinManager)

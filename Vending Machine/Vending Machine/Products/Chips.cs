@@ -2,13 +2,12 @@
 
 namespace VendingMachine.Products
 {
-    public class Chips : IProduct
+    public class Chips : ProductBase
     {
-        public string Price 
-        {
-            get { return _price.ToString("C", CultureInfo.CurrentCulture); }
-        }
+        private const decimal PRICE = (decimal) 0.50;
 
-        private decimal _price = (decimal) 0.50;
+        public Chips() : base(PRICE)
+        {
+        }
     }
 }

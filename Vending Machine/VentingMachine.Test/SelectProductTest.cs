@@ -54,7 +54,20 @@ namespace VentingMachine.Test
             // Buy cola
             var product = _prodMgr.Buy("Chips");
             Assert.AreEqual(typeof(Chips), product.GetType());
+        }
 
+        [TestMethod]
+        public void SelectCandyForSixtyFiveCentsWithSixtyFiveCents()
+        {
+            // Insert 4 quarters, a dime, and a nickle ($0.65)
+            for (var i = 0; i < 2; i++)
+                _coinMgr.Insert(Coins.Quarter);
+            _coinMgr.Insert(Coins.Dime);
+            _coinMgr.Insert(Coins.Nickel);
+
+            // Buy cola
+            var product = _prodMgr.Buy("Candy");
+            Assert.AreEqual(typeof(Candy), product.GetType());
         }
     }
 }
