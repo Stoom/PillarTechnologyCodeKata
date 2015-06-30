@@ -4,12 +4,12 @@ namespace VendingMachine.Products
 {
     public abstract class ProductBase : IProduct
     {
-        public virtual string Price
+        public virtual decimal Price
         {
-            get { return _price.ToString("C", CultureInfo.CurrentCulture); }
+            get { return _price; }
         }
 
-        protected decimal _price;
+        private readonly decimal _price;
 
         protected ProductBase(decimal price)
         {

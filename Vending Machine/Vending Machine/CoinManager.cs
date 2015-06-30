@@ -48,6 +48,18 @@ namespace VendingMachine
             }
         }
 
+        public void Subtract(decimal price)
+        {
+            if (_currentAmount >= price)
+            {
+                _currentAmount -= price;
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("");
+            }
+        }
+
         public void DisplayCurrentAmount()
         {
             _dispManager.OnDisplayUpdate(new DisplayUpdateEventArgs { Message = CurrentAmount });

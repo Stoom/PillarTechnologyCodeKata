@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using VendingMachine.Products;
 
 namespace VendingMachine
@@ -30,20 +31,24 @@ namespace VendingMachine
         {
             var reqestedProduct = product.ToUpperInvariant();
 
-            if (_avliableProducts.ContainsKey(reqestedProduct) &&
-                _avliableProducts[reqestedProduct].Price == _coinManager.CurrentAmount)
+            try
             {
-                _dispManager.OnDisplayUpdate(new DisplayUpdateEventArgs { Message = "THANK YOU" });
-                _coinManager.ResetCurrentAmount();
-                return _avliableProducts[reqestedProduct];
+                if (_avliableProducts.ContainsKey(reqestedProduct))
+                {
+                    _coinManager.Subtract(_avliableProducts[reqestedProduct].Price);
+                    _dispManager.OnDisplayUpdate(new DisplayUpdateEventArgs { Message = "THANK YOU" });
+                    _coinManager.ResetCurrentAmount();
+                    return _avliableProducts[reqestedProduct];
+                }
             }
-            if (_avliableProducts.ContainsKey(reqestedProduct))
+            catch (ArgumentOutOfRangeException)
             {
-                var msg = String.Format("PRICE {0}", _avliableProducts[reqestedProduct].Price);
-                _dispManager.OnDisplayUpdate(new DisplayUpdateEventArgs { Message = msg } );
+                var msg = String.Format("PRICE {0}", _avliableProducts[reqestedProduct].Price.ToString("C", CultureInfo.CurrentCulture));
+                _dispManager.OnDisplayUpdate(new DisplayUpdateEventArgs { Message = msg });
                 _coinManager.DisplayCurrentAmount();
                 return null;
             }
+
             throw new ArgumentException("Product is not found");
         }
     }
