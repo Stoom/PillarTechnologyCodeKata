@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VendingMachine;
 
@@ -48,6 +49,22 @@ namespace VentingMachine.Test
         public void NoCoinsInsertCoinMessage()
         {
             Assert.AreEqual("INSERT COIN", _coinMgr.CurrentAmount);
+        }
+
+        [TestMethod]
+        public void UpdateCurrentAmountOnInsert()
+        {
+            var receivedEvents = new List<string>();
+            _coinMgr.CurrentAmountChanged += delegate(object sender, EventArgs e)
+            {
+                receivedEvents.Add(_coinMgr.CurrentAmount);
+            };
+
+            _coinMgr.Insert(Coins.Quarter);
+            _coinMgr.Insert(Coins.Quarter);
+
+            Assert.AreEqual("$0.25", receivedEvents[0]);
+            Assert.AreEqual("$0.50", receivedEvents[1]);
         }
     }
 }

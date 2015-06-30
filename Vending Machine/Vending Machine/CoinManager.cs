@@ -17,6 +17,8 @@ namespace VendingMachine
             Coins.Quarter
         };
 
+        public event EventHandler<EventArgs> CurrentAmountChanged;
+
         public string CurrentAmount
         {
             get
@@ -32,9 +34,23 @@ namespace VendingMachine
         public void Insert(Coins coin)
         {
             if (ACCEPTED_COINS.Contains(coin))
-                _currentAmount = coin.ToDecimal();
+            {
+                _currentAmount += coin.ToDecimal();
+                OnCurrentAmountChanged(new EventArgs());
+            }
             else
+            {
                 throw new ArgumentException("Invalid coin inserted");
+            }
+        }
+
+        private void OnCurrentAmountChanged(EventArgs e)
+        {
+            var handler = CurrentAmountChanged;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
         }
     }
 }
