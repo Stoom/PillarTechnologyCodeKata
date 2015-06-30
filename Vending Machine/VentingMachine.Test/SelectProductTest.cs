@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VendingMachine;
 using VendingMachine.Products;
@@ -10,12 +11,14 @@ namespace VentingMachine.Test
     {
         private CoinManager _coinMgr;
         private ProductManager _prodMgr;
+        private DisplayManager _dispMgr;
 
         [TestInitialize]
         public void Init()
         {
-            _coinMgr = new CoinManager();
-            _prodMgr = new ProductManager(_coinMgr);
+            _dispMgr = new DisplayManager();
+            _coinMgr = new CoinManager(_dispMgr);
+            _prodMgr = new ProductManager(_coinMgr, _dispMgr);
         }
 
         [TestMethod]
@@ -68,6 +71,23 @@ namespace VentingMachine.Test
             // Buy cola
             var product = _prodMgr.Buy("Candy");
             Assert.AreEqual(typeof(Candy), product.GetType());
+        }
+
+        [TestMethod]
+        public void DisplayThankYouAfterDispensedAndInsertCoins()
+        {
+            var receivedEvents = new List<string>();
+            _dispMgr.DisplayUpdate += delegate(object sender, DisplayUpdateEventArgs e) {
+                receivedEvents.Add(e.Message);
+            };
+
+            _coinMgr.Insert(Coins.Quarter);
+            _coinMgr.Insert(Coins.Quarter);
+            _prodMgr.Buy("Chips");
+
+            Assert.AreEqual(4, receivedEvents.Count);
+            Assert.AreEqual("THANK YOU", receivedEvents[2]);
+            Assert.AreEqual("INSERT COIN", receivedEvents[3]);
         }
     }
 }

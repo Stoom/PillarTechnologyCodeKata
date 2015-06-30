@@ -9,11 +9,13 @@ namespace VentingMachine.Test
     public class AcceptCoinsTest
     {
         private CoinManager _coinMgr;
+        private DisplayManager _dispMgr;
 
         [TestInitialize]
         public void Init()
         {
-            _coinMgr = new CoinManager();
+            _dispMgr = new DisplayManager();
+            _coinMgr = new CoinManager(_dispMgr);
         }
 
         [TestMethod]
@@ -55,9 +57,9 @@ namespace VentingMachine.Test
         public void UpdateCurrentAmountOnInsert()
         {
             var receivedEvents = new List<string>();
-            _coinMgr.CurrentAmountChanged += delegate(object sender, EventArgs e)
+            _dispMgr.DisplayUpdate += delegate(object sender, DisplayUpdateEventArgs e)
             {
-                receivedEvents.Add(_coinMgr.CurrentAmount);
+                receivedEvents.Add(e.Message);
             };
 
             _coinMgr.Insert(Coins.Quarter);
