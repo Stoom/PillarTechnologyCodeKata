@@ -11,15 +11,20 @@ namespace VendingMachine
     public class CoinManager
     {
         private readonly HashSet<Coins> ACCEPTED_COINS = new HashSet<Coins>
-            {
-                Coins.Nickel,
-                Coins.Dime,
-                Coins.Quarter
-            };
+        {
+            Coins.Nickel,
+            Coins.Dime,
+            Coins.Quarter
+        };
 
         public string CurrentAmount
         {
-            get { return _currentAmount.ToString("C", CultureInfo.CurrentCulture); }
+            get
+            {
+                return (_currentAmount > 0)
+                            ? _currentAmount.ToString("C",CultureInfo.CurrentCulture) 
+                            : "INSERT COIN";
+            }
         }
 
         private decimal _currentAmount = (decimal)0.00;

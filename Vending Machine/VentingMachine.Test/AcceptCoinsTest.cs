@@ -37,11 +37,17 @@ namespace VentingMachine.Test
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof (ArgumentException))]
         public void RejectInvalidCoins()
         {
             _coinMgr.Insert(Coins.Penny);
             Assert.AreEqual("$0.00", _coinMgr.CurrentAmount);
+        }
+
+        [TestMethod]
+        public void NoCoinsInsertCoinMessage()
+        {
+            Assert.AreEqual("INSERT COIN", _coinMgr.CurrentAmount);
         }
     }
 }
