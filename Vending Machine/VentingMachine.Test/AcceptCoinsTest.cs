@@ -7,19 +7,26 @@ namespace VentingMachine.Test
     [TestClass]
     public class AcceptCoinsTest
     {
-        private CoinManager coinMgr;
+        private CoinManager _coinMgr;
 
         [TestInitialize]
         public void Init()
         {
-            coinMgr = new CoinManager();
+            _coinMgr = new CoinManager();
         }
 
         [TestMethod]
         public void AcceptNickels()
         {
-            coinMgr.Insert(Coins.Nickel);
-            Assert.AreEqual("$0.05", coinMgr.CurrentAmount);
+            _coinMgr.Insert(Coins.Nickel);
+            Assert.AreEqual("$0.05", _coinMgr.CurrentAmount);
+        }
+
+        [TestMethod]
+        public void AcceptDimes()
+        {
+            _coinMgr.Insert(Coins.Dime);
+            Assert.AreEqual("$0.10", _coinMgr.CurrentAmount);
         }
     }
 }
