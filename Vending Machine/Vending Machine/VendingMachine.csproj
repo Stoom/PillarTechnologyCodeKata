@@ -42,6 +42,7 @@
     <Compile Include="CoinManager.cs" />
     <Compile Include="CoinsEnum.cs" />
     <Compile Include="ProductManager.cs" />
+    <Compile Include="Products\Chips.cs" />
     <Compile Include="Products\Cola.cs" />
     <Compile Include="Products\IProduct.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

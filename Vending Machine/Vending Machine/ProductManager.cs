@@ -9,7 +9,8 @@ namespace VendingMachine
         private readonly CoinManager _coinManager;
         private readonly Dictionary<String, IProduct> _avliableProducts = new Dictionary<string, IProduct>
         {
-            {"COLA", new Cola()}
+            {"COLA", new Cola()},
+            {"CHIPS", new Chips()}
         };
 
         public ProductManager(CoinManager coinManager)
@@ -23,6 +24,9 @@ namespace VendingMachine
             if (reqestedProduct == "COLA" &&
                 _avliableProducts[reqestedProduct].Price == _coinManager.CurrentAmount)
                 return _avliableProducts[reqestedProduct];
+            if (reqestedProduct == "CHIPS" &&
+                _avliableProducts[reqestedProduct].Price == _coinManager.CurrentAmount)
+                return _avliableProducts["CHIPS"];
             throw new ArgumentException("Product is not found");
         }
     }
