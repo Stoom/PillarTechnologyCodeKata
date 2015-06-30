@@ -8,6 +8,6 @@ namespace VendingMachine.Products
 {
     public interface IProduct
     {
-        decimal Price { get; }
+        string Price { get; }
     }
 }
