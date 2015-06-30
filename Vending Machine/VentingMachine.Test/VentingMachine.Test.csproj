@@ -53,6 +53,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AcceptCoinsTest.cs" />
     <Compile Include="SelectProductTest.cs" />
+    <Compile Include="MakeChange.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Vending Machine\VendingMachine.csproj">
