@@ -7,7 +7,7 @@ namespace VendingMachine
     public class ProductManager
     {
         private readonly CoinManager _coinManager;
-        private readonly Dictionary<String, IProduct> _avliableProducts = new Dictionary<string, IProduct>
+        private readonly Dictionary<string, IProduct> _avliableProducts = new Dictionary<string, IProduct>
         {
             {"COLA", new Cola()},
             {"CHIPS", new Chips()}
@@ -21,12 +21,11 @@ namespace VendingMachine
         public IProduct Buy(string product)
         {
             var reqestedProduct = product.ToUpperInvariant();
-            if (reqestedProduct == "COLA" &&
+            if (_avliableProducts.ContainsKey(reqestedProduct) &&
                 _avliableProducts[reqestedProduct].Price == _coinManager.CurrentAmount)
+            {
                 return _avliableProducts[reqestedProduct];
-            if (reqestedProduct == "CHIPS" &&
-                _avliableProducts[reqestedProduct].Price == _coinManager.CurrentAmount)
-                return _avliableProducts["CHIPS"];
+            }
             throw new ArgumentException("Product is not found");
         }
     }
