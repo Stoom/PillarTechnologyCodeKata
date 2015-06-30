@@ -17,26 +17,30 @@ namespace VendingMachine
             Coins.Quarter
         };
 
-        public event EventHandler<EventArgs> CurrentAmountChanged;
-
         public string CurrentAmount
         {
             get
             {
                 return (_currentAmount > 0)
-                            ? _currentAmount.ToString("C",CultureInfo.CurrentCulture) 
+                            ? _currentAmount.ToString("C", CultureInfo.CurrentCulture)
                             : "INSERT COIN";
             }
         }
 
         private decimal _currentAmount = (decimal)0.00;
+        private readonly DisplayManager _dispManager;
+
+        public CoinManager(DisplayManager displayManager)
+        {
+            _dispManager = displayManager;
+        }
 
         public void Insert(Coins coin)
         {
             if (ACCEPTED_COINS.Contains(coin))
             {
                 _currentAmount += coin.ToDecimal();
-                OnCurrentAmountChanged(new EventArgs());
+                DisplayCurrentAmount();
             }
             else
             {
@@ -44,13 +48,15 @@ namespace VendingMachine
             }
         }
 
-        private void OnCurrentAmountChanged(EventArgs e)
+        public void DisplayCurrentAmount()
         {
-            var handler = CurrentAmountChanged;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            _dispManager.OnDisplayUpdate(new DisplayUpdateEventArgs { Message = CurrentAmount });
+        }
+
+        public void ResetCurrentAmount()
+        {
+            _currentAmount = (decimal)0.00;
+            _dispManager.OnDisplayUpdate(new DisplayUpdateEventArgs { Message = CurrentAmount });
         }
     }
 }

@@ -41,7 +41,18 @@
   <ItemGroup>
     <Compile Include="CoinManager.cs" />
     <Compile Include="CoinsEnum.cs" />
+    <Compile Include="DisplayManager.cs" />
+    <Compile Include="DisplayUpdateEventArgs.cs" />
+    <Compile Include="ProductManager.cs" />
+    <Compile Include="Products\Candy.cs" />
+    <Compile Include="Products\Chips.cs" />
+    <Compile Include="Products\Cola.cs" />
+    <Compile Include="Products\IProduct.cs" />
+    <Compile Include="Products\ProductBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="EventArgs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
