@@ -35,16 +35,27 @@ namespace VentingMachine.Test
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void SelectColaForOneDollareWithFiftyCents()
+        public void SelectColaForOneDollarWithFiftyCents()
         {
-            // Insert 4 quarters
+            // Insert 2 quarters
             for (var i = 0; i < 2; i++)
                 _coinMgr.Insert(Coins.Quarter);
 
+            // Catch display events
+            var receivedEvents = new List<string>();
+            _dispMgr.DisplayUpdate += delegate(object sender, DisplayUpdateEventArgs e)
+            {
+                receivedEvents.Add(e.Message);
+            };
+
             // Buy cola
             var product = _prodMgr.Buy("Cola");
-            Assert.AreEqual(typeof(Cola), product.GetType());
+            Assert.IsNull(product);
+
+            // Check for display messages
+            Assert.AreEqual(2, receivedEvents.Count);
+            Assert.AreEqual("PRICE $1.00", receivedEvents[0]);
+            Assert.AreEqual("$0.50", receivedEvents[1]);
         }
 
         [TestMethod]

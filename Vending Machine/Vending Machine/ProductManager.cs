@@ -37,6 +37,13 @@ namespace VendingMachine
                 _coinManager.ResetCurrentAmount();
                 return _avliableProducts[reqestedProduct];
             }
+            if (_avliableProducts.ContainsKey(reqestedProduct))
+            {
+                var msg = String.Format("PRICE {0}", _avliableProducts[reqestedProduct].Price);
+                _dispManager.OnDisplayUpdate(new DisplayUpdateEventArgs { Message = msg } );
+                _coinManager.DisplayCurrentAmount();
+                return null;
+            }
             throw new ArgumentException("Product is not found");
         }
     }

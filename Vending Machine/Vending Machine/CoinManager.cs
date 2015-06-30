@@ -40,12 +40,17 @@ namespace VendingMachine
             if (ACCEPTED_COINS.Contains(coin))
             {
                 _currentAmount += coin.ToDecimal();
-                _dispManager.OnDisplayUpdate(new DisplayUpdateEventArgs { Message = CurrentAmount });
+                DisplayCurrentAmount();
             }
             else
             {
                 throw new ArgumentException("Invalid coin inserted");
             }
+        }
+
+        public void DisplayCurrentAmount()
+        {
+            _dispManager.OnDisplayUpdate(new DisplayUpdateEventArgs { Message = CurrentAmount });
         }
 
         public void ResetCurrentAmount()
