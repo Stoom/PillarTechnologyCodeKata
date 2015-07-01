@@ -60,5 +60,20 @@ namespace VentingMachine.Test
             Assert.AreEqual(1, receivedEvents.Count);
             Assert.AreEqual("INSERT COIN", receivedEvents[0]);
         }
+
+        [TestMethod]
+        public void DoNotReturnChangeMultipleTimes()
+        {
+            _coinMgr.Insert(Coins.Quarter);
+
+            var coins = _coinMgr.ReturnCoins();
+
+            var expectedResults = new Dictionary<Coins, int>
+            {
+                {Coins.Quarter, 1},
+            };
+            CollectionAssert.AreEqual(expectedResults, coins);
+            CollectionAssert.AreEqual(new Dictionary<Coins, int>(),  _coinMgr.ReturnCoins());
+        }
     }
 }
