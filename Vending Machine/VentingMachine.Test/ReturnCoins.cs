@@ -38,5 +38,27 @@ namespace VentingMachine.Test
             };
             CollectionAssert.AreEqual(expectedResults, coins);
         }
+
+        [TestMethod]
+        public void ReturnCoinsAndDisplayInsertCoin()
+        {
+            // Insert coins
+            _coinMgr.Insert(Coins.Quarter);
+            _coinMgr.Insert(Coins.Quarter);
+
+            // Read display
+            var receivedEvents = new List<string>();
+            _dispMgr.DisplayUpdate += delegate(object sender, DisplayUpdateEventArgs e)
+            {
+                receivedEvents.Add(e.Message);
+            };
+
+            // Return coins
+            _coinMgr.ReturnCoins();
+
+            // Test results
+            Assert.AreEqual(1, receivedEvents.Count);
+            Assert.AreEqual("INSERT COIN", receivedEvents[0]);
+        }
     }
 }

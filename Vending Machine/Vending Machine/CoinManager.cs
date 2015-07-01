@@ -73,13 +73,12 @@ namespace VendingMachine
         public Dictionary<Coins, int> GetChange()
         {
             var changeReturned = new Dictionary<Coins, int>();
-            var change = _currentAmount;
 
             foreach (var coin in ACCEPTED_COINS)
             {
-                while (change >= coin.ToDecimal())
+                while (_currentAmount >= coin.ToDecimal())
                 {
-                    change -= coin.ToDecimal();
+                    _currentAmount -= coin.ToDecimal();
                     if (!changeReturned.ContainsKey(coin))
                     {
                         changeReturned.Add(coin, 1);
