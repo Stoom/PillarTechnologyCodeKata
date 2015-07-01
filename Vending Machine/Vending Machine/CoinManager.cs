@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace VendingMachine
 {
     public class CoinManager
     {
-        private readonly HashSet<Coins> ACCEPTED_COINS = new HashSet<Coins>
+        public event EventHandler ChangeDispensed;
+
+        // List in largest to smallest values
+        private readonly List<Coins> ACCEPTED_COINS = new List<Coins>
         {
-            Coins.Nickel,
+            Coins.Quarter,
             Coins.Dime,
-            Coins.Quarter
+            Coins.Nickel
         };
 
         public string CurrentAmount
@@ -53,6 +52,12 @@ namespace VendingMachine
             if (_currentAmount >= price)
             {
                 _currentAmount -= price;
+
+                // Dispense change if there is anything left
+                if (_currentAmount > 0)
+                {
+                    OnChangeDispensed();
+                }
             }
             else
             {
@@ -65,10 +70,43 @@ namespace VendingMachine
             _dispManager.OnDisplayUpdate(new DisplayUpdateEventArgs { Message = CurrentAmount });
         }
 
+        public Dictionary<Coins, int> GetChange()
+        {
+            var changeReturned = new Dictionary<Coins, int>();
+            var change = _currentAmount;
+
+            foreach (var coin in ACCEPTED_COINS)
+            {
+                while (change >= coin.ToDecimal())
+                {
+                    change -= coin.ToDecimal();
+                    if (!changeReturned.ContainsKey(coin))
+                    {
+                        changeReturned.Add(coin, 1);
+                    }
+                    else
+                    {
+                        changeReturned[coin]++;
+                    }
+                }
+            }
+
+            return changeReturned;
+        }
+
         public void ResetCurrentAmount()
         {
             _currentAmount = (decimal)0.00;
             _dispManager.OnDisplayUpdate(new DisplayUpdateEventArgs { Message = CurrentAmount });
+        }
+
+        private void OnChangeDispensed()
+        {
+            var handler = ChangeDispensed;
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
+            }
         }
     }
 }
