@@ -33,12 +33,20 @@ namespace VendingMachine
 
             try
             {
-                if (_avliableProducts.ContainsKey(reqestedProduct))
+                if (_avliableProducts.ContainsKey(reqestedProduct) &&
+                    !_avliableProducts[reqestedProduct].IsOutOfStock)
                 {
                     _coinManager.Subtract(_avliableProducts[reqestedProduct].Price);
+                    _avliableProducts[reqestedProduct].Inventory--;
                     _dispManager.OnDisplayUpdate(new DisplayUpdateEventArgs { Message = "THANK YOU" });
                     _coinManager.DisplayCurrentAmount();
                     return _avliableProducts[reqestedProduct];
+                }
+                if (_avliableProducts[reqestedProduct].IsOutOfStock)
+                {
+                    _dispManager.OnDisplayUpdate(new DisplayUpdateEventArgs{ Message = "SOLD OUT" });
+                    _coinManager.DisplayCurrentAmount();
+                    return null;
                 }
             }
             catch (ArgumentOutOfRangeException)

@@ -55,6 +55,7 @@
     <Compile Include="SelectProductTest.cs" />
     <Compile Include="MakeChangeTest.cs" />
     <Compile Include="ReturnCoins.cs" />
+    <Compile Include="SoldOutTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Vending Machine\VendingMachine.csproj">
