@@ -94,6 +94,13 @@ namespace VendingMachine
             return changeReturned;
         }
 
+        public Dictionary<Coins, int> ReturnCoins()
+        {
+            var changeReturned = GetChange();
+            DisplayCurrentAmount();
+            return changeReturned;
+        }
+
         public void ResetCurrentAmount()
         {
             _currentAmount = (decimal)0.00;
