@@ -37,7 +37,7 @@ namespace VendingMachine
                 {
                     _coinManager.Subtract(_avliableProducts[reqestedProduct].Price);
                     _dispManager.OnDisplayUpdate(new DisplayUpdateEventArgs { Message = "THANK YOU" });
-                    _coinManager.ResetCurrentAmount();
+                    _coinManager.DisplayCurrentAmount();
                     return _avliableProducts[reqestedProduct];
                 }
             }
