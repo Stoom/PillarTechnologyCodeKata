@@ -47,5 +47,35 @@ namespace VentingMachine.Test
             };
             CollectionAssert.AreEqual(expectedResults, receivedChange);
         }
+
+        [TestMethod]
+        public void DontMakeChangeTwice()
+        {
+            // Put in $1.55
+            for (var i = 0; i < 6; i++)
+                _coinMgr.Insert(Coins.Quarter);
+            _coinMgr.Insert(Coins.Nickel);
+
+            // Listen for change to drop
+            var receivedChange = new Dictionary<Coins, int>();
+            _coinMgr.ChangeDispensed += delegate
+            {
+                // Get Change
+                receivedChange = _coinMgr.GetChange();
+            };
+
+            // Buy candy
+            _prodMgr.Buy("Candy");
+
+            // Test change returned
+            var expectedResults = new Dictionary<Coins, int>
+            {
+                {Coins.Quarter, 3},
+                {Coins.Dime, 1},
+                {Coins.Nickel, 1}
+            };
+            CollectionAssert.AreEqual(expectedResults, receivedChange);
+            CollectionAssert.AreEqual(new Dictionary<Coins, int>(), _coinMgr.GetChange());
+        }
     }
 }
