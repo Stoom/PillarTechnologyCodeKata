@@ -33,6 +33,8 @@ namespace VendingMachine
 
             try
             {
+                IProduct dispensedProduct = null;
+
                 if (_avliableProducts.ContainsKey(reqestedProduct) &&
                     !_avliableProducts[reqestedProduct].IsOutOfStock)
                 {
@@ -40,14 +42,19 @@ namespace VendingMachine
                     _avliableProducts[reqestedProduct].Inventory--;
                     _dispManager.OnDisplayUpdate(new DisplayUpdateEventArgs { Message = "THANK YOU" });
                     _coinManager.DisplayCurrentAmount();
-                    return _avliableProducts[reqestedProduct];
+                    dispensedProduct = _avliableProducts[reqestedProduct];
                 }
-                if (_avliableProducts[reqestedProduct].IsOutOfStock)
+                else if (_avliableProducts[reqestedProduct].IsOutOfStock)
                 {
                     _dispManager.OnDisplayUpdate(new DisplayUpdateEventArgs{ Message = "SOLD OUT" });
                     _coinManager.DisplayCurrentAmount();
-                    return null;
                 }
+                else
+                {
+                    throw new ArgumentException("Product is not found");
+                }
+
+                return dispensedProduct;
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -56,8 +63,6 @@ namespace VendingMachine
                 _coinManager.DisplayCurrentAmount();
                 return null;
             }
-
-            throw new ArgumentException("Product is not found");
         }
     }
 }
