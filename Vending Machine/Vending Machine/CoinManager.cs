@@ -100,12 +100,6 @@ namespace VendingMachine
             return changeReturned;
         }
 
-        public void ResetCurrentAmount()
-        {
-            _currentAmount = (decimal)0.00;
-            _dispManager.OnDisplayUpdate(new DisplayUpdateEventArgs { Message = CurrentAmount });
-        }
-
         private void OnChangeDispensed()
         {
             var handler = ChangeDispensed;
