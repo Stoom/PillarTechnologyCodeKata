@@ -77,5 +77,20 @@ namespace VentingMachine.Test
             CollectionAssert.AreEqual(expectedResults, receivedChange);
             CollectionAssert.AreEqual(new Dictionary<Coins, int>(), _coinMgr.GetChange());
         }
+
+        [TestMethod]
+        public void BuyColaWithOneDollarAndDoNotMakeChange()
+        {
+            // Put in $1.55
+            for (var i = 0; i < 4; i++)
+                _coinMgr.Insert(Coins.Quarter);
+
+
+            // Buy cola
+            _prodMgr.Buy("Cola");
+
+            // Test change returned
+            CollectionAssert.AreEqual(new Dictionary<Coins, int>(), _coinMgr.GetChange());
+        }
     }
 }
