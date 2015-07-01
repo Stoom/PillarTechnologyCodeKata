@@ -45,5 +45,32 @@ namespace VentingMachine.Test
             // Test
             Assert.AreEqual("SOLD OUT",receivedEvents[4]);
         }
+
+        [TestMethod]
+        public void PrintCurrentAmountOfMoneyAfterSoldOut()
+        {
+            // Read display
+            var receivedEvents = new List<string>();
+            _dispMgr.DisplayUpdate += delegate(object sender, DisplayUpdateEventArgs e)
+            {
+                receivedEvents.Add(e.Message);
+            };
+
+            for (var i = 0; i < 3; i++)
+            {
+                // Reset reading display
+                receivedEvents = new List<string>();
+
+                // Insert 4 quarters
+                for (var ii = 0; ii < 4; ii++)
+                    _coinMgr.Insert(Coins.Quarter);
+                // Buy cola
+                _prodMgr.Buy("Cola");
+            }
+
+            // Test
+            Assert.AreEqual("SOLD OUT", receivedEvents[4]);
+            Assert.AreEqual("$1.00", receivedEvents[5]);
+        }
     }
 }
