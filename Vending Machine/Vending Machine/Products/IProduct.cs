@@ -9,5 +9,7 @@ namespace VendingMachine.Products
     public interface IProduct
     {
         decimal Price { get; }
+        uint Inventory { get; set; }
+        bool IsOutOfStock { get; }
     }
 }
