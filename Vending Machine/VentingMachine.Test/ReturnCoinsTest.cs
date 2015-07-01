@@ -6,7 +6,7 @@ using VendingMachine;
 namespace VentingMachine.Test
 {
     [TestClass]
-    public class ReturnCoins
+    public class ReturnCoinsTest
     {
         private CoinManager _coinMgr;
         private DisplayManager _dispMgr;
