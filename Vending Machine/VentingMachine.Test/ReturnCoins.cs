@@ -9,7 +9,6 @@ namespace VentingMachine.Test
     public class ReturnCoins
     {
         private CoinManager _coinMgr;
-        private ProductManager _prodMgr;
         private DisplayManager _dispMgr;
 
         [TestInitialize]
@@ -17,7 +16,6 @@ namespace VentingMachine.Test
         {
             _dispMgr = new DisplayManager();
             _coinMgr = new CoinManager(_dispMgr);
-            _prodMgr = new ProductManager(_coinMgr, _dispMgr);
         }
 
         [TestMethod]
