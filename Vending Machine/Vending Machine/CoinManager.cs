@@ -8,13 +8,12 @@ namespace VendingMachine
     {
         public event EventHandler ChangeDispensed;
 
-        public bool IsChangeDispensed { get; private set; }
-
-        private readonly HashSet<Coins> ACCEPTED_COINS = new HashSet<Coins>
+        // List in largest to smallest values
+        private readonly List<Coins> ACCEPTED_COINS = new List<Coins>
         {
-            Coins.Nickel,
+            Coins.Quarter,
             Coins.Dime,
-            Coins.Quarter
+            Coins.Nickel
         };
 
         public string CurrentAmount
@@ -57,7 +56,6 @@ namespace VendingMachine
                 // Dispense change if there is anything left
                 if (_currentAmount > 0)
                 {
-                    IsChangeDispensed = true;
                     OnChangeDispensed();
                 }
             }
@@ -77,46 +75,19 @@ namespace VendingMachine
             var changeReturned = new Dictionary<Coins, int>();
             var change = _currentAmount;
 
-            // Get quarters
-            while (change >= Coins.Quarter.ToDecimal())
+            foreach (var coin in ACCEPTED_COINS)
             {
-                change -= Coins.Quarter.ToDecimal();
-
-                if (!changeReturned.ContainsKey(Coins.Quarter))
+                while (change >= coin.ToDecimal())
                 {
-                    changeReturned.Add(Coins.Quarter, 1);
-                }
-                else
-                {
-                    changeReturned[Coins.Quarter]++;
-                }
-            }
-            // Get dimes
-            while (change >= Coins.Dime.ToDecimal())
-            {
-                change -= Coins.Dime.ToDecimal();
-
-                if (!changeReturned.ContainsKey(Coins.Dime))
-                {
-                    changeReturned.Add(Coins.Dime, 1);
-                }
-                else
-                {
-                    changeReturned[Coins.Dime]++;
-                }
-            }
-            // Get nickles
-            while (change >= Coins.Nickel.ToDecimal())
-            {
-                change -= Coins.Nickel.ToDecimal();
-
-                if (!changeReturned.ContainsKey(Coins.Nickel))
-                {
-                    changeReturned.Add(Coins.Nickel, 1);
-                }
-                else
-                {
-                    changeReturned[Coins.Nickel]++;
+                    change -= coin.ToDecimal();
+                    if (!changeReturned.ContainsKey(coin))
+                    {
+                        changeReturned.Add(coin, 1);
+                    }
+                    else
+                    {
+                        changeReturned[coin]++;
+                    }
                 }
             }
 

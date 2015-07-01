@@ -5,7 +5,7 @@ using VendingMachine;
 namespace VentingMachine.Test
 {
     [TestClass]
-    public class MakeChange
+    public class MakeChangeTest
     {
         private CoinManager _coinMgr;
         private ProductManager _prodMgr;
@@ -32,11 +32,10 @@ namespace VentingMachine.Test
             _coinMgr.ChangeDispensed += delegate
             {
                 // Get Change
-                if (_coinMgr.IsChangeDispensed)
-                    receivedChange = _coinMgr.GetChange();
+                receivedChange = _coinMgr.GetChange();
             };
 
-            // Buy cola
+            // Buy candy
             _prodMgr.Buy("Candy");
 
             // Test change returned
