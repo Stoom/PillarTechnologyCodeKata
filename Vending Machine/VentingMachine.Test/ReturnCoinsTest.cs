@@ -8,8 +8,8 @@ namespace VentingMachine.Test
     [TestClass]
     public class ReturnCoinsTest
     {
-        private CoinManager _coinMgr;
-        private DisplayManager _dispMgr;
+        private ICurrencyManager<Coins> _coinMgr;
+        private IDisplayManager _dispMgr;
 
         [TestInitialize]
         public void Init()
@@ -26,7 +26,7 @@ namespace VentingMachine.Test
             _coinMgr.Insert(Coins.Dime);
             _coinMgr.Insert(Coins.Nickel);
 
-            var coins = _coinMgr.ReturnCoins();
+            var coins = _coinMgr.ReturnCurrency();
 
             var expectedResults = new Dictionary<Coins, int>
             {
@@ -52,7 +52,7 @@ namespace VentingMachine.Test
             };
 
             // Return coins
-            _coinMgr.ReturnCoins();
+            _coinMgr.ReturnCurrency();
 
             // Test results
             Assert.AreEqual(1, receivedEvents.Count);
@@ -64,14 +64,14 @@ namespace VentingMachine.Test
         {
             _coinMgr.Insert(Coins.Quarter);
 
-            var coins = _coinMgr.ReturnCoins();
+            var coins = _coinMgr.ReturnCurrency();
 
             var expectedResults = new Dictionary<Coins, int>
             {
                 {Coins.Quarter, 1},
             };
             CollectionAssert.AreEqual(expectedResults, coins);
-            CollectionAssert.AreEqual(new Dictionary<Coins, int>(),  _coinMgr.ReturnCoins());
+            CollectionAssert.AreEqual(new Dictionary<Coins, int>(),  _coinMgr.ReturnCurrency());
         }
     }
 }

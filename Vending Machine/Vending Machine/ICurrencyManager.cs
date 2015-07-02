@@ -1,13 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace VendingMachine
 {
-    interface ICurrencyManager<T>
+    public interface ICurrencyManager
     {
+        event EventHandler CurrencyDispensed;
+        string CurrentAmount { get; }
         void DisplayCurrentAmount();
-        void Insert(T currency);
         void Subtract(decimal price);
+    }
+
+    public interface ICurrencyManager<T>
+    {
+        event EventHandler CurrencyDispensed;
+        string CurrentAmount { get; }
+        void DisplayCurrentAmount();
+        void Subtract(decimal price);
+        void Insert(T currency);
         Dictionary<T, int> GetChange();
-        Dictionary<T, int> ReturnCoins();
+        Dictionary<T, int> ReturnCurrency();
     }
 }

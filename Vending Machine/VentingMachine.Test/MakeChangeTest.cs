@@ -7,16 +7,16 @@ namespace VentingMachine.Test
     [TestClass]
     public class MakeChangeTest
     {
-        private CoinManager _coinMgr;
-        private ProductManager _prodMgr;
-        private DisplayManager _dispMgr;
+        private ICurrencyManager<Coins> _coinMgr;
+        private IProductManager _prodMgr;
+        private IDisplayManager _dispMgr;
 
         [TestInitialize]
         public void Init()
         {
             _dispMgr = new DisplayManager();
             _coinMgr = new CoinManager(_dispMgr);
-            _prodMgr = new ProductManager(_coinMgr, _dispMgr);
+            _prodMgr = new ProductManager((ICurrencyManager)_coinMgr, _dispMgr);
         }
 
         [TestMethod]
@@ -29,7 +29,7 @@ namespace VentingMachine.Test
 
             // Listen for change to drop
             var receivedChange = new Dictionary<Coins, int>();
-            _coinMgr.ChangeDispensed += delegate
+            _coinMgr.CurrencyDispensed += delegate
             {
                 // Get Change
                 receivedChange = _coinMgr.GetChange();
@@ -58,7 +58,7 @@ namespace VentingMachine.Test
 
             // Listen for change to drop
             var receivedChange = new Dictionary<Coins, int>();
-            _coinMgr.ChangeDispensed += delegate
+            _coinMgr.CurrencyDispensed += delegate
             {
                 // Get Change
                 receivedChange = _coinMgr.GetChange();

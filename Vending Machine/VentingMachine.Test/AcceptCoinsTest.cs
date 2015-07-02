@@ -8,8 +8,8 @@ namespace VentingMachine.Test
     [TestClass]
     public class AcceptCoinsTest
     {
-        private CoinManager _coinMgr;
-        private DisplayManager _dispMgr;
+        private ICurrencyManager<Coins> _coinMgr;
+        private IDisplayManager _dispMgr;
 
         [TestInitialize]
         public void Init()

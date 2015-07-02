@@ -7,7 +7,7 @@ namespace VendingMachine
 {
     public class ProductManager : IProductManager
     {
-        private readonly ICurrencyManager<Coins> _coinManager;
+        private readonly ICurrencyManager _coinManager;
         private readonly IDisplayManager _dispManager;
         private readonly Dictionary<string, IProduct> _avliableProducts = new Dictionary<string, IProduct>
         {
@@ -16,7 +16,7 @@ namespace VendingMachine
             {"CANDY", new Candy()}
         };
 
-        public ProductManager(CoinManager coinManager, DisplayManager displayManager)
+        public ProductManager(ICurrencyManager coinManager, IDisplayManager displayManager)
         {
             if (coinManager == null)
                 throw new ArgumentNullException("coinManager");

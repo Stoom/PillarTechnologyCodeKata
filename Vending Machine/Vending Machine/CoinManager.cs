@@ -4,9 +4,9 @@ using System.Globalization;
 
 namespace VendingMachine
 {
-    public class CoinManager : ICurrencyManager<Coins>
+    public class CoinManager : ICurrencyManager<Coins>, ICurrencyManager
     {
-        public event EventHandler ChangeDispensed;
+        public event EventHandler CurrencyDispensed;
 
         // List in largest to smallest values
         private readonly List<Coins> ACCEPTED_COINS = new List<Coins>
@@ -21,8 +21,8 @@ namespace VendingMachine
             get
             {
                 return (_currentAmount > 0)
-                            ? _currentAmount.ToString("C", CultureInfo.CurrentCulture)
-                            : "INSERT COIN";
+                    ? _currentAmount.ToString("C", CultureInfo.CurrentCulture)
+                    : "INSERT COIN";
             }
         }
 
@@ -93,6 +93,11 @@ namespace VendingMachine
             return changeReturned;
         }
 
+        public Dictionary<Coins, int> ReturnCurrency()
+        {
+            return ReturnCoins();
+        }
+
         public Dictionary<Coins, int> ReturnCoins()
         {
             var changeReturned = GetChange();
@@ -102,7 +107,7 @@ namespace VendingMachine
 
         private void OnChangeDispensed()
         {
-            var handler = ChangeDispensed;
+            var handler = CurrencyDispensed;
             if (handler != null)
             {
                 handler(this, EventArgs.Empty);
