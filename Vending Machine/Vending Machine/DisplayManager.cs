@@ -2,11 +2,11 @@
 
 namespace VendingMachine
 {
-    public class DisplayManager
+    public class DisplayManager : IDisplayManager
     {
         public event EventHandler<DisplayUpdateEventArgs> DisplayUpdate;
 
-        internal void OnDisplayUpdate(DisplayUpdateEventArgs e)
+        public void OnDisplayUpdate(DisplayUpdateEventArgs e)
         {
             var handler = DisplayUpdate;
             if (handler != null)

@@ -43,6 +43,9 @@
     <Compile Include="CoinsEnum.cs" />
     <Compile Include="DisplayManager.cs" />
     <Compile Include="DisplayUpdateEventArgs.cs" />
+    <Compile Include="ICurrencyManager.cs" />
+    <Compile Include="IDisplayManager.cs" />
+    <Compile Include="IProductManager.cs" />
     <Compile Include="ProductManager.cs" />
     <Compile Include="Products\Candy.cs" />
     <Compile Include="Products\Chips.cs" />

@@ -5,10 +5,10 @@ using VendingMachine.Products;
 
 namespace VendingMachine
 {
-    public class ProductManager
+    public class ProductManager : IProductManager
     {
-        private readonly CoinManager _coinManager;
-        private readonly DisplayManager _dispManager;
+        private readonly ICurrencyManager<Coins> _coinManager;
+        private readonly IDisplayManager _dispManager;
         private readonly Dictionary<string, IProduct> _avliableProducts = new Dictionary<string, IProduct>
         {
             {"COLA", new Cola()},

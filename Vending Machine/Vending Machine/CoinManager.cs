@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace VendingMachine
 {
-    public class CoinManager
+    public class CoinManager : ICurrencyManager<Coins>
     {
         public event EventHandler ChangeDispensed;
 
@@ -27,9 +27,9 @@ namespace VendingMachine
         }
 
         private decimal _currentAmount = (decimal)0.00;
-        private readonly DisplayManager _dispManager;
+        private readonly IDisplayManager _dispManager;
 
-        public CoinManager(DisplayManager displayManager)
+        public CoinManager(IDisplayManager displayManager)
         {
             _dispManager = displayManager;
         }
